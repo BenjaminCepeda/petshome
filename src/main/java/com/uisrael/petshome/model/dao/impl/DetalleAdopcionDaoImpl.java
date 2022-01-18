@@ -14,16 +14,14 @@ import com.uisrael.petshome.model.dao.DetalleAdopcionDao;
 import com.uisrael.petshome.model.entity.CabeceraAdopcion;
 import com.uisrael.petshome.model.entity.DetalleAdopcion;
 
-public class DetalleAdopcionDaoImpl implements DetalleAdopcionDao {
+public class DetalleAdopcionDaoImpl extends GenericDaoImpl<DetalleAdopcion> implements DetalleAdopcionDao {
 
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PUPetshome");
-	private EntityManager em = emf.createEntityManager();
 
 	@Override
 	public void insertar(DetalleAdopcion detalleAdopcion) {
-		em.getTransaction().begin();
-		em.persist(detalleAdopcion);
-		em.getTransaction().commit();
+		this.beginTransaction();
+		this.create(detalleAdopcion);
+		this.commit();
 
 	}
 
@@ -41,22 +39,22 @@ public class DetalleAdopcionDaoImpl implements DetalleAdopcionDao {
 
 	@Override
 	public List<DetalleAdopcion> listar(int id) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<DetalleAdopcion> cq = cb.createQuery(DetalleAdopcion.class);
 		Root<DetalleAdopcion> detalleAdopcion= cq.from(DetalleAdopcion.class);
 		cq.select(detalleAdopcion).where(cb.equal(detalleAdopcion.get("fkCabeceraAdopcion").get("idCabeceraAdopcion"), id));
 
-		return em.createQuery(cq).getResultList();	
+		return this.entityManager.createQuery(cq).getResultList();	
 	}
 	
 	@Override
 	public List<Tuple> listarTuple(int id){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Tuple> cq = cb.createTupleQuery();
 		Root<DetalleAdopcion> detalleAdopcion = cq.from(DetalleAdopcion.class);
 		cq.select(cb.tuple(detalleAdopcion.get("observacion"),detalleAdopcion.get("fkMascota"))).
 			where(cb.equal(detalleAdopcion.get("fkCabeceraAdopcion").get("idCabeceraAdopcion"), id));
 		
-		return em.createQuery(cq).getResultList();	
+		return this.entityManager.createQuery(cq).getResultList();	
 	}
 }

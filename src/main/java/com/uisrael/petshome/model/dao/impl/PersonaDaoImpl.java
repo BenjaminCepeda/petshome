@@ -13,15 +13,12 @@ import javax.persistence.criteria.Root;
 import com.uisrael.petshome.model.dao.PersonaDao;
 import com.uisrael.petshome.model.entity.Persona;
 
-public class PersonaDaoImpl implements PersonaDao {
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PUPetshome");
-	private EntityManager em = emf.createEntityManager();
+public class PersonaDaoImpl extends GenericDaoImpl<Persona> implements PersonaDao {
 	@Override
 	public void insertar(Persona persona) {		
-		em.getTransaction().begin();
-		em.persist(persona);
-		em.getTransaction().commit();
-
+		this.beginTransaction();
+		this.create(persona);
+		this.commit();
 
 	}
 
@@ -39,23 +36,18 @@ public class PersonaDaoImpl implements PersonaDao {
 
 	@Override
 	public List<Persona> listar() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Persona> cq = cb.createQuery(Persona.class);
-		Root<Persona> persona = cq.from(Persona.class);
-		cq.select(persona);
-		
-		return em.createQuery(cq).getResultList();	
+		return this.findAll();	
 	}
 
 	@Override
 	public List<Tuple> listarTuple(){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Tuple> cq = cb.createTupleQuery();
 		Root<Persona> persona = cq.from(Persona.class);
 		cq.select(cb.tuple(persona.get("idPersona"), persona.get("nombres"), persona.get("apellidos"))).
 			orderBy(cb.asc( persona.get("apellidos")));
 		
-		return em.createQuery(cq).getResultList();	
+		return this.entityManager.createQuery(cq).getResultList();	
 	}
 	
 

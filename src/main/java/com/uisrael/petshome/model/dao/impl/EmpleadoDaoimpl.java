@@ -1,5 +1,6 @@
 package com.uisrael.petshome.model.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,22 +11,19 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import com.uisrael.petshome.model.dao.impl.GenericDaoImpl;
 import com.uisrael.petshome.model.dao.EmpleadoDao;
 import com.uisrael.petshome.model.entity.Empleado;
 import com.uisrael.petshome.model.entity.Mascota;
 
 
-public class EmpleadoDaoimpl implements EmpleadoDao {
-
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PUPetshome");
-	private EntityManager em = emf.createEntityManager();
+public class EmpleadoDaoimpl extends GenericDaoImpl<Empleado> implements  EmpleadoDao{
 
 	@Override
 	public void insertar(Empleado empleado) {
-		em.getTransaction().begin();
-		em.persist(empleado);
-		em.getTransaction().commit();
-
+		this.beginTransaction();
+		this.create(empleado);
+		this.commit();
 
 	}
 
@@ -43,31 +41,27 @@ public class EmpleadoDaoimpl implements EmpleadoDao {
 
 	@Override
 	public List<Empleado> listar() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Empleado> cq = cb.createQuery(Empleado.class);
-		Root<Empleado> empleado= cq.from(Empleado.class);
-		cq.select(empleado);
 		
-		return em.createQuery(cq).getResultList();	
+		return this.findAll();	
 	}
 
-	@Override
+
 	public List<Tuple> listarTuple(){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Tuple> cq = cb.createTupleQuery();
 		Root<Empleado> empleado = cq.from(Empleado.class);
-		cq.select(cb.tuple(empleado.get("idEmpleado"), empleado.get("nombres"), empleado.get("apellidos")));
-		
-		return em.createQuery(cq).getResultList();	
+		cq.select(cb.tuple(empleado.get("idEmpleado"), empleado.get("nombres"), empleado.get("apellidos")));			
+
+		return this.entityManager.createQuery(cq).getResultList();	
 	}
 
 	@Override
 	public Long  totalEmpleados(){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);
 		Root<Empleado> empleado = cq.from(Empleado.class);
 		cq.select(cb.count(empleado.get("idEmpleado")));
 		
-		return em.createQuery(cq).getSingleResult();	
+		return this.entityManager.createQuery(cq).getSingleResult();	
 	}
 }

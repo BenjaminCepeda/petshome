@@ -15,17 +15,14 @@ import com.uisrael.petshome.model.entity.CabeceraAdopcion;
 import com.uisrael.petshome.model.entity.Empleado;
 
 
-public class CabeceraAdopcionDaoImpl implements CabeceraAdopcionDao {
+public class CabeceraAdopcionDaoImpl extends GenericDaoImpl<CabeceraAdopcion> implements CabeceraAdopcionDao {
 
-	private EntityManagerFactory emf = Persistence.createEntityManagerFactory("PUPetshome");
-	private EntityManager em = emf.createEntityManager();
 
 	@Override
 	public void insertar(CabeceraAdopcion cabeceraAdopcion) {
-		em.getTransaction().begin();
-		em.persist(cabeceraAdopcion);
-		em.getTransaction().commit();
-
+		this.beginTransaction();
+		this.create(cabeceraAdopcion);
+		this.commit();
 	}
 
 	@Override
@@ -42,21 +39,17 @@ public class CabeceraAdopcionDaoImpl implements CabeceraAdopcionDao {
 
 	@Override
 	public List<CabeceraAdopcion> listar() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<CabeceraAdopcion> cq = cb.createQuery(CabeceraAdopcion.class);
-		Root<CabeceraAdopcion> cabeceraAdopcion= cq.from(CabeceraAdopcion.class);
-		cq.select(cabeceraAdopcion);
 		
-		return em.createQuery(cq).getResultList();	
+		return this.findAll();	
 
 	}
 	
 	public List<Tuple> listarTuple(){
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Tuple> cq = cb.createTupleQuery();
 		Root<CabeceraAdopcion> cabeceraAdopcion = cq.from(CabeceraAdopcion.class);
 		cq.select(cb.tuple(cabeceraAdopcion.get("idCabeceraAdopcion"), cabeceraAdopcion.get("fecha")));
 		
-		return em.createQuery(cq).getResultList();	
+		return this.entityManager.createQuery(cq).getResultList();	
 	}
 }
