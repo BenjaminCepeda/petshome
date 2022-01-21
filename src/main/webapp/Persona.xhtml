@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<h:form id="frmPersona">
+		<p:growl id="mensaje" showDetail="true"></p:growl>
+		<p:toolbarGroup>
+			<p:commandButton type="button" value="New" icon="pi pi-file"
+				styleClass="p-mr-2" />
+			<p:commandButton type="button" value="Open" icon="pi pi-folder-open"
+				styleClass="ui-button-success" />
+			<p:commandButton type="button" title="Save" icon="pi pi-save"
+				styleClass="ui-button-help p-mr-2" />
+		</p:toolbarGroup>
+
+		<p:panel header="Ingreso Personas" >
+			<p:panelGrid columns="4">
+				<p:outputLabel value="Nombre"></p:outputLabel>
+				<p:inputText value="#{personaView.persona.nombres}"></p:inputText>
+				<p:outputLabel value="Apellido"></p:outputLabel>
+				<p:inputText value="#{personaView.persona.apellidos}"></p:inputText>
+				<p:outputLabel value="Identificacion"></p:outputLabel>
+				<p:inputText value="#{personaView.persona.identificacion}"></p:inputText>
+				<p:outputLabel value="Direccion"></p:outputLabel>
+				<p:inputText value="#{personaView.persona.direccion}"></p:inputText>
+				<p:outputLabel value="Telefono"></p:outputLabel>
+				<p:inputText value="#{personaView.persona.telefono}"></p:inputText>
+			</p:panelGrid>
+			<p:commandButton value="Guardar" action="#{personaView.insertar}"></p:commandButton>
+		</p:panel>
+		<p:panel>
+			<p:dataTable id="dtPersonas" lazy="null" widgetVar="dtPersonas"
+				value="#{personaView.listaPersonas}" var="persona"
+				paginator="true"
+				paginatorPosition="bottom" rows="25">
+
+				<p:column headerText="Id Persona" sortBy="#{persona.idPersona}">
+					<p:outputLabel value="#{persona.idPersona}"></p:outputLabel>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
