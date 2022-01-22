@@ -29,9 +29,9 @@ public class PersonaDaoImpl extends GenericDaoImpl<Persona> implements PersonaDa
 	}
 
 	@Override
-	public void eliminar(int id) {
+	public void eliminar(Persona persona) {
 		// TODO Auto-generated method stub
-
+		this.delete(persona);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ public interface PersonaDao {
 
 	public void insertar(Persona persona);
 	public void actualizar(Persona persona);
-	public void eliminar(int id);
+	public void eliminar(Persona persona);
 	public List<Persona> listar();
 	public List<Tuple> listarTuple();
 	

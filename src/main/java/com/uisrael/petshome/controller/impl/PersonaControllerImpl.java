@@ -27,9 +27,9 @@ public class PersonaControllerImpl implements PersonaController {
 	}
 
 	@Override
-	public void eliminar(int id) {
+	public void eliminar(Persona persona) {
 		// TODO Auto-generated method stub
-
+		personaDao.eliminar(persona);
 	}
 
 	@Override

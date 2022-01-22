@@ -37,13 +37,26 @@ public class PersonaView implements Serializable{
 	}
 	
 	public void insertar() {
-		personaController.insertar(persona);
+		if (persona.getIdPersona()>0) {
+			personaController.actualizar(persona);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registro Actualizado"));
+		}
+		else {
+			personaController.insertar(persona);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registro Ingresado"));
+			
+		}
+			
 		listarPersonas();
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registro Ingresado"));
 		PrimeFaces.current().ajax().update("frmPersona:mensaje", "frmPersona:dtPersonas");	
 	}
-	
-	public void listarPersonas() {
+	public void eliminar() {
+			personaController.eliminar(persona);
+			listarPersonas();
+			PrimeFaces.current().ajax().update("frmPersona:mensaje", "frmPersona:dtPersonas");	
+	}
+
+		public void listarPersonas() {
 		listaPersonas = personaController.listar();
 	}
 	

@@ -9,7 +9,7 @@ import com.uisrael.petshome.model.entity.Persona;
 public interface PersonaController {
 	public void insertar(Persona persona);
 	public void actualizar(Persona persona);
-	public void eliminar(int id);
+	public void eliminar(Persona persona);
 	public List<Persona> listar();
 	public List<Tuple> listarTuple();
 	
