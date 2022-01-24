@@ -29,13 +29,19 @@ public class MascotaDaoImpl extends GenericDaoImpl<Mascota> implements MascotaDa
 
 	@Override
 	public void actualizar(Mascota mascota) {
-		// TODO Auto-generated method stub
+		this.beginTransaction();
+		this.update(mascota);
+		this.commit();
+
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(Mascota mascota) {
+		this.beginTransaction();
+		this.delete(mascota);
+		this.commit();
+
 
 	}
 

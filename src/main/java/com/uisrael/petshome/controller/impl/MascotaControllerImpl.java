@@ -20,13 +20,13 @@ public class MascotaControllerImpl implements MascotaController {
 
 	@Override
 	public void actualizar(Mascota mascota) {
-		// TODO Auto-generated method stub
+		mascotaDao.actualizar(mascota);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(Mascota mascota) {
+		mascotaDao.eliminar(mascota);
 
 	}
 

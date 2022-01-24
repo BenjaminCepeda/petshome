@@ -21,13 +21,13 @@ public class CabeceraAdopcionControllerImpl implements CabeceraAdopcionControlle
 
 	@Override
 	public void actualizar(CabeceraAdopcion cabeceraAdopcion) {
-		// TODO Auto-generated method stub
+		cabeceraAdopcionDao.actualizar(cabeceraAdopcion);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(CabeceraAdopcion cabeceraAdopcion) {
+		cabeceraAdopcionDao.eliminar(cabeceraAdopcion);
 
 	}
 

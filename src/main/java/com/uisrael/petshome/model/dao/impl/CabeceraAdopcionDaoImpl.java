@@ -27,13 +27,19 @@ public class CabeceraAdopcionDaoImpl extends GenericDaoImpl<CabeceraAdopcion> im
 
 	@Override
 	public void actualizar(CabeceraAdopcion cabeceraAdopcion) {
-		// TODO Auto-generated method stub
+		this.beginTransaction();
+		this.update(cabeceraAdopcion);
+		this.commit();
+
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(CabeceraAdopcion cabeceraAdopcion) {
+		this.beginTransaction();
+		this.delete(cabeceraAdopcion);
+		this.commit();
+
 
 	}
 

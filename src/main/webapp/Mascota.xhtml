@@ -5,40 +5,108 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Insert title here</title>
+	<title>Ingreso de Mascotas</title>
+	<style type="text/css">
+    button.ui-button {
+        margin-right: .5rem;
+
+    }
+</style>
 </h:head>
 <h:body>
 	<h:form id="frmMascota">
 		<p:growl id="mensaje" showDetail="true"></p:growl>
-		<p:toolbarGroup>
-			<p:commandButton type="button" value="New" icon="pi pi-file"
-				styleClass="p-mr-2" />
-			<p:commandButton type="button" value="Open" icon="pi pi-folder-open"
-				styleClass="ui-button-success" />
-			<p:commandButton type="button" title="Save" icon="pi pi-save"
-				styleClass="ui-button-help p-mr-2" />
-		</p:toolbarGroup>
+		<p:toolbar>
+			<p:toolbarGroup>
+				<p:commandButton value="Nuevo" icon="pi pi-plus"
+					actionListener="#{mascotaView.limpiar}"
+					update="frmMascota:opnNuevo" oncomplete="PF('dlgNuevo').show()"
+					styleClass="rounded-button ui-button-success">
+					<p:resetInput target="frmMascota:opnNuevo" />
+				</p:commandButton>
+                <p:commandButton id="cmbBorrarSeleccionados" value="Eliminar selección"
+                                 icon="pi pi-trash" 
+                                 styleClass="rounded-button ui-button-danger" >
+                    <p:confirm header="Confirmation" message="Delete the selected products?"
+                               icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:fileUpload mode="simple" skinSimple="true" label="Import"
+					chooseIcon="pi pi-download" styleClass="rounded-button"/>
+				<p:commandButton value="Export" icon="pi pi-upload"
+					styleClass="rounded-button ui-button-help" ajax="false">
+					<p:dataExporter type="pdf" target="dtMascotas" fileName="mascotas" />
+				</p:commandButton>
+			</p:toolbarGroup>
+		</p:toolbar>
+		<p:dataTable id="dtMascotas" lazy="null" widgetVar="dtMascotas"
+			value="#{mascotaView.listaMascotas}" var="mascota" rowKey="#{mascota.idMascota}" 
+			paginator="true" paginatorPosition="bottom" rows="25">
 
-		<p:panel header="Ingreso Mascotas" >
-			<p:panelGrid columns="4">
-				<p:outputLabel value="Nombre"></p:outputLabel>
-				<p:inputText value="#{mascotaView.mascota.nombre}"></p:inputText>
-				<p:outputLabel value="Tipo"></p:outputLabel>
-				<p:inputText value="#{mascotaView.mascota.tipo}"></p:inputText>
-			</p:panelGrid>
-			<p:commandButton value="Guardar" action="#{mascotaView.insertar}"></p:commandButton>
-		</p:panel>
-		<p:panel>
-			<p:dataTable id="dtMascotas" lazy="null" widgetVar="dtMascotas"
-				value="#{mascotaView.listaMascotas}" var="mascota"
-				paginator="true"
-				paginatorPosition="bottom" rows="25">
+			<p:column selectionMode="multiple" exportable="false"></p:column>
+			<p:column headerText="Id Mascota" sortBy="#{mascota.idMascota}">
+				<p:outputLabel value="#{mascota.idMascota}"></p:outputLabel>
+			</p:column>
+			<p:column headerText="Tipo" sortBy="#{mascota.tipo}">
+				<p:outputLabel value="#{mascota.tipo}"></p:outputLabel>
+			</p:column>
+			<p:column headerText="Nombres" sortBy="#{mascota.nombre}">
+				<p:outputLabel value="#{mascota.nombre}"></p:outputLabel>
+			</p:column>
+			<p:column headerText="Estado registro" sortBy="#{mascota.estadoRegistro}">
+				<p:outputLabel value="#{mascota.estadoRegistro}"></p:outputLabel>
+			</p:column>
+			<p:column exportable="false">
+				<p:commandButton icon="pi pi-pencil" title="New" update="frmMascota:dlgNuevo"
+					oncomplete="PF('dlgNuevo').show()" styleClass="rounded-button">
+					<f:setPropertyActionListener value="#{mascota}"
+						target="#{mascotaView.mascota}"/>
+				</p:commandButton>
+				<p:commandButton icon="pi pi-trash" update="frmMascota:dtMascotas"
+					oncomplete="PF('dlgEliminar').show()" 
+					title="View" styleClass="rounded-button">
+					<f:setPropertyActionListener value="#{mascota}"
+						target="#{mascotaView.mascota}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
 
-				<p:column headerText="Id Mascota" sortBy="#{mascota.idMascota}">
-					<p:outputLabel value="#{mascota.idMascota}"></p:outputLabel>
-				</p:column>
-			</p:dataTable>
-		</p:panel>
+		<p:dialog id="dlgNuevo" header="Ingreso Mascotas" widgetVar="dlgNuevo"
+			showEffect="fade" modal="true">
+			<p:outputPanel id="opnNuevo" class="ui-fluid">
+				<p:outputPanel rendered="#{not empty mascotaView.mascota}">
+					<p:panelGrid columns="4" padding="2">
+						<p:outputLabel value="Id"></p:outputLabel>
+						<p:inputText value="#{mascotaView.mascota.idMascota}"
+							disabled="true"></p:inputText>
+						<p:outputLabel value="Tipo"></p:outputLabel>
+						<p:inputText value="#{mascotaView.mascota.tipo}"></p:inputText>
+						<p:outputLabel value="Nombre"></p:outputLabel>
+						<p:inputText value="#{mascotaView.mascota.nombre}"></p:inputText>
+						<p:outputLabel value="Estado registro"></p:outputLabel>
+						<p:inputText value="#{mascotaView.mascota.estadoRegistro}"></p:inputText>
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:outputPanel>
+			<f:facet name="footer">
+				<p:commandButton value="Guardar" action="#{mascotaView.insertar}"
+					icon="pi pi-save" onclick="PF('dlgNuevo').hide()"
+					class="rounded-button"></p:commandButton>
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					onclick="PF('dlgNuevo').hide()"
+					class="rounded-button" />
+			</f:facet>
+		</p:dialog>
+		<p:confirmDialog widgetVar="dlgEliminar" showEffect="fade" width="300"
+			message="Desea elimnar?" header="Confirm" severity="warn">
+			<p:commandButton value="Yes" icon="pi pi-check"
+				actionListener="#{mascotaView.eliminar}" process="@this"
+				oncomplete="PF('dlgEliminar').hide()" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-button-secondary" icon="pi pi-times"
+				onclick="PF('dlgEliminar').hide()" />
+		</p:confirmDialog>
 	</h:form>
 </h:body>
 </html>
+

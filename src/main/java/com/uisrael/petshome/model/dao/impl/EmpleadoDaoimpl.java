@@ -29,13 +29,18 @@ public class EmpleadoDaoimpl extends GenericDaoImpl<Empleado> implements  Emplea
 
 	@Override
 	public void actualizar(Empleado empleado) {
-		// TODO Auto-generated method stub
+		this.beginTransaction();
+		this.update(empleado);
+		this.commit();
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(Empleado empleado) {
+		this.beginTransaction();
+		this.delete(empleado);
+		this.commit();
+
 
 	}
 

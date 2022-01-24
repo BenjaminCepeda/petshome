@@ -43,6 +43,7 @@ public class PersonaView implements Serializable{
 		}
 		else {
 			personaController.insertar(persona);
+			persona = new Persona();	
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registro Ingresado"));
 			
 		}
@@ -53,10 +54,15 @@ public class PersonaView implements Serializable{
 	public void eliminar() {
 			personaController.eliminar(persona);
 			listarPersonas();
+			persona = new Persona();	
 			PrimeFaces.current().ajax().update("frmPersona:mensaje", "frmPersona:dtPersonas");	
 	}
 
-		public void listarPersonas() {
+	public void limpiar() {
+		persona = new Persona();	
+	}
+	
+	public void listarPersonas() {
 		listaPersonas = personaController.listar();
 	}
 	

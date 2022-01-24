@@ -27,13 +27,19 @@ public class DetalleAdopcionDaoImpl extends GenericDaoImpl<DetalleAdopcion> impl
 
 	@Override
 	public void actualizar(DetalleAdopcion detalleAdopcion) {
-		// TODO Auto-generated method stub
+		this.beginTransaction();
+		this.update(detalleAdopcion);
+		this.commit();
+
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(DetalleAdopcion detalleAdopcion) {
+		this.beginTransaction();
+		this.delete(detalleAdopcion);
+		this.commit();
+
 
 	}
 

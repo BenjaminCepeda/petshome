@@ -22,7 +22,7 @@ public class PersonaControllerImpl implements PersonaController {
 
 	@Override
 	public void actualizar(Persona persona) {
-		// TODO Auto-generated method stub
+		personaDao.actualizar(persona);
 
 	}
 

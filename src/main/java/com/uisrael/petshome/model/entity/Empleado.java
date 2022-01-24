@@ -34,15 +34,16 @@ public class Empleado implements Serializable{
 	private String cedula;
 	private String nombres;
 	private String apellidos;
+	private String direccion;
 	private String Telefono;
+	//Delega a JPA el manejo de formatos con la BDD
+	@Temporal(TemporalType.DATE)
+	private Date fechaNacimiento;
 	private int estadoRegistro;
 	
 	@OneToMany(cascade = CascadeType.REFRESH, mappedBy = "fkEmpleado")
 	private List<CabeceraAdopcion> listaCabeceraAdopcion= new ArrayList<CabeceraAdopcion>();
 	
-	//Delega a JPA el manejo de formatos con la BDD
-	@Temporal(TemporalType.DATE)
-	private Date fechaNacimiento;
 
 	public int getIdEmpleado() {
 		return idEmpleado;
@@ -95,14 +96,19 @@ public class Empleado implements Serializable{
 	public void setListaCabeceraAdopcion(List<CabeceraAdopcion> listaCabeceraAdopcion) {
 		this.listaCabeceraAdopcion = listaCabeceraAdopcion;
 	}
+	public String getDireccion() {
+		return direccion;
+	}
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
 	@Override
 	public String toString() {
 		return "Empleado [idEmpleado=" + idEmpleado + ", cedula=" + cedula + ", nombres=" + nombres + ", apellidos="
-				+ apellidos + ", Telefono=" + Telefono + ", estadoRegistro=" + estadoRegistro
-				+ ", listaCabeceraAdopcion=" + listaCabeceraAdopcion + ", fechaNacimiento=" + fechaNacimiento + "]";
+				+ apellidos + ", direccion=" + direccion + ", Telefono=" + Telefono + ", fechaNacimiento="
+				+ fechaNacimiento + ", estadoRegistro=" + estadoRegistro + ", listaCabeceraAdopcion="
+				+ listaCabeceraAdopcion + "]";
 	}
 
-	
-	
 	
 }

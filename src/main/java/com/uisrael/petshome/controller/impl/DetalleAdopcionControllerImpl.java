@@ -20,13 +20,13 @@ public class DetalleAdopcionControllerImpl implements DetalleAdopcionController 
 
 	@Override
 	public void actualizar(DetalleAdopcion detalleAdopcion) {
-		// TODO Auto-generated method stub
+		detalleAdopcionDao.actualizar(detalleAdopcion);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(DetalleAdopcion detalleAdopcion) {
+		detalleAdopcionDao.eliminar(detalleAdopcion);
 
 	}
 

@@ -20,13 +20,13 @@ public class EmpleadoControllerImpl implements EmpleadoController {
 
 	@Override
 	public void actualizar(Empleado empleado) {
-		// TODO Auto-generated method stub
+		empleadoDao.actualizar(empleado);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
-		// TODO Auto-generated method stub
+	public void eliminar(Empleado empleado) {
+		empleadoDao.eliminar(empleado);
 
 	}
 

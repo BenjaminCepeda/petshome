@@ -24,14 +24,17 @@ public class PersonaDaoImpl extends GenericDaoImpl<Persona> implements PersonaDa
 
 	@Override
 	public void actualizar(Persona persona) {
-		// TODO Auto-generated method stub
+		this.beginTransaction();
+		this.update(persona);
+		this.commit();
 
 	}
 
 	@Override
 	public void eliminar(Persona persona) {
-		// TODO Auto-generated method stub
+		this.beginTransaction();
 		this.delete(persona);
+		this.commit();
 	}
 
 	@Override

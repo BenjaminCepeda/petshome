@@ -5,40 +5,129 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>CabeceraAdopcion</title>
+	<title>Listado de Adopciones</title>
+	<style type="text/css">
+    button.ui-button {
+        margin-right: .5rem;
+
+    }
+</style>
 </h:head>
 <h:body>
 	<h:form id="frmCabeceraAdopcion">
 		<p:growl id="mensaje" showDetail="true"></p:growl>
-		<p:toolbarGroup>
-			<p:commandButton type="button" value="New" icon="pi pi-file"
-				styleClass="p-mr-2" />
-			<p:commandButton type="button" value="Open" icon="pi pi-folder-open"
-				styleClass="ui-button-success" />
-			<p:commandButton type="button" title="Save" icon="pi pi-save"
-				styleClass="ui-button-help p-mr-2" />
-		</p:toolbarGroup>
+		<p:toolbar>
+			<p:toolbarGroup>
+				<p:commandButton value="Nuevo" icon="pi pi-plus"
+					actionListener="#{cabeceraAdopcionView.limpiar}"
+					update="frmCabeceraAdopcion:opnNuevo" oncomplete="PF('dlgNuevo').show()"
+					styleClass="rounded-button ui-button-success">
+					<p:resetInput target="frmCabeceraAdopcion:opnNuevo" />
+				</p:commandButton>
+                <p:commandButton id="cmbBorrarSeleccionados" value="Eliminar selección"
+                                 icon="pi pi-trash" 
+                                 styleClass="rounded-button ui-button-danger" >
+                    <p:confirm header="Confirmation" message="Delete the selected products?"
+                               icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:fileUpload mode="simple" skinSimple="true" label="Import"
+					chooseIcon="pi pi-download" styleClass="rounded-button"/>
+				<p:commandButton value="Export" icon="pi pi-upload"
+					styleClass="rounded-button ui-button-help" ajax="false">
+					<p:dataExporter type="pdf" target="dtCabeceraAdopciones" fileName="cabeceraAdopciones" />
+				</p:commandButton>
+			</p:toolbarGroup>
+		</p:toolbar>
+		<p:dataTable id="dtCabeceraAdopciones" lazy="null" widgetVar="dtCabeceraAdopciones"
+			value="#{cabeceraAdopcionView.listaCabeceraAdopciones}" var="cabeceraAdopcion" rowKey="#{cabeceraAdopcion.idCabeceraAdopcion}" 
+			paginator="true" paginatorPosition="bottom" rows="25">
 
-		<p:panel header="Ingreso CabeceraAdopcion" >
-			<p:panelGrid columns="4">
-				<p:outputLabel value="Fecha"></p:outputLabel>
-				<p:inputText value="#{cabeceraAdopcionView.cabeceraAdopcion.fecha}"></p:inputText>
-				<p:outputLabel value="Observacion"></p:outputLabel>
-				<p:inputText value="#{cabeceraAdopcionView.cabeceraAdopcion.observacion}"></p:inputText>
-			</p:panelGrid>
-			<p:commandButton value="Guardar" action="#{cabeceraAdopcionView.insertar}"></p:commandButton>
-		</p:panel>
-		<p:panel>
-			<p:dataTable id="dtCabeceraAdopcion" lazy="null" widgetVar="dtCabeceraAdopcion"
-				value="#{cabeceraAdopcionView.listaCabeceraAdopcion}" var="cabeceraAdopcion"
-				paginator="true"
-				paginatorPosition="bottom" rows="25">
+			<p:column selectionMode="multiple" exportable="false"></p:column>
+			<p:column headerText="Id CabeceraAdopcion" sortBy="#{cabeceraAdopcion.idCabeceraAdopcion}">
+				<p:outputLabel value="#{cabeceraAdopcion.idCabeceraAdopcion}"></p:outputLabel>
+			</p:column>
+			<p:column headerText="Fecha adopción" sortBy="#{cabeceraAdopcion.fecha}">
+				<p:outputLabel value="#{cabeceraAdopcion.fecha}">
+					<f:convertDateTime pattern="yyyy/MM/dd" />				
+				</p:outputLabel>
+			</p:column>
+			<p:column headerText="Adoptado por" sortBy="#{cabeceraAdopcion.fkPersona}">
+				<p:outputLabel value="#{cabeceraAdopcion.fkPersona.nombres}"></p:outputLabel>
+				<p:outputLabel value="#{cabeceraAdopcion.fkPersona.apellidos}"></p:outputLabel>
+			</p:column>
+			<p:column headerText="Entregado por" sortBy="#{cabeceraAdopcion.fkEmpleado}">
+				<p:outputLabel value="#{cabeceraAdopcion.fkEmpleado.nombres}"></p:outputLabel>
+				<p:outputLabel value="#{cabeceraAdopcion.fkEmpleado.apellidos}"></p:outputLabel>
+			</p:column>
+			<p:column headerText="Estado registro" sortBy="#{cabeceraAdopcion.estadoRegistro}">
+				<p:outputLabel value="#{cabeceraAdopcion.estadoRegistro}"></p:outputLabel>
+			</p:column>
+			<p:column exportable="false">
+				<p:commandButton icon="pi pi-pencil" title="New" update="frmCabeceraAdopcion:dlgNuevo"
+					oncomplete="PF('dlgNuevo').show()" styleClass="rounded-button">
+					<f:setPropertyActionListener value="#{cabeceraAdopcion}"
+						target="#{cabeceraAdopcionView.cabeceraAdopcion}"/>
+				</p:commandButton>
+				<p:commandButton icon="pi pi-trash" update="frmCabeceraAdopcion:dtCabeceraAdopciones"
+					oncomplete="PF('dlgEliminar').show()" 
+					title="View" styleClass="rounded-button">
+					<f:setPropertyActionListener value="#{cabeceraAdopcion}"
+						target="#{cabeceraAdopcionView.cabeceraAdopcion}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
 
-				<p:column headerText="Id CabeceraAdopcion" sortBy="#{cabeceraAdopcion.idCabeceraAdopcion}">
-					<p:outputLabel value="#{cabeceraAdopcion.idCabeceraAdopcion}"></p:outputLabel>
-				</p:column>
-			</p:dataTable>
-		</p:panel>
+		<p:dialog id="dlgNuevo" header="Ingreso CabeceraAdopciones" widgetVar="dlgNuevo"
+			showEffect="fade" modal="true">
+			<p:outputPanel id="opnNuevo" class="ui-fluid">
+				<p:outputPanel rendered="#{not empty cabeceraAdopcionView.cabeceraAdopcion}">
+					<p:panelGrid columns="4" padding="2">
+						<p:outputLabel value="Id"></p:outputLabel>
+						<p:inputText value="#{cabeceraAdopcionView.cabeceraAdopcion.idCabeceraAdopcion}"
+							disabled="true"></p:inputText>
+						<p:outputLabel value="fecha"></p:outputLabel>
+						<p:datePicker id="spanish" value="#{cabeceraAdopcionView.cabeceraAdopcion.fecha}"
+							monthNavigator="true" yearNavigator="true" showWeek="true" />
+			<p:outputLabel value="Adoptado por"></p:outputLabel>
+            <p:selectOneListbox id="advanced" value="#{cabeceraAdopcionView.cabeceraAdopcion.fkPersona}" 
+                var="c" filter="true" filterMatchMode="contains">
+                <f:selectItems value="#{cabeceraAdopcionView.listaPersonas}" var="persona" itemLabel="#{persona.apellidos}" 
+                	itemValue="#{persona}"/>
+                <p:column>
+                    <span class="flag flag-#{c.identificacion}" style="width: 30px; height: 20px"/>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{c.apellidos}"/>
+                </p:column>
+            </p:selectOneListbox>
+						
+						<p:outputLabel value="Observacion"></p:outputLabel>
+						<p:inputText value="#{cabeceraAdopcionView.cabeceraAdopcion.observacion}"></p:inputText>
+						<p:outputLabel value="Estado registro"></p:outputLabel>
+						<p:inputText value="#{cabeceraAdopcionView.cabeceraAdopcion.estadoRegistro}"></p:inputText>
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:outputPanel>
+			<f:facet name="footer">
+				<p:commandButton value="Guardar" action="#{cabeceraAdopcionView.insertar}"
+					icon="pi pi-save" onclick="PF('dlgNuevo').hide()"
+					class="rounded-button"></p:commandButton>
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					onclick="PF('dlgNuevo').hide()"
+					class="rounded-button" />
+			</f:facet>
+		</p:dialog>
+		<p:confirmDialog widgetVar="dlgEliminar" showEffect="fade" width="300"
+			message="Desea elimnar?" header="Confirm" severity="warn">
+			<p:commandButton value="Yes" icon="pi pi-check"
+				actionListener="#{cabeceraAdopcionView.eliminar}" process="@this"
+				oncomplete="PF('dlgEliminar').hide()" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-button-secondary" icon="pi pi-times"
+				onclick="PF('dlgEliminar').hide()" />
+		</p:confirmDialog>
 	</h:form>
 </h:body>
 </html>
+
