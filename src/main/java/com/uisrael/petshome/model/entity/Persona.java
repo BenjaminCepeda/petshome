@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 
@@ -37,7 +38,7 @@ public class Persona implements Serializable{
 	private String direccion;
 	private String telefono;
 	private int estadoRegistro;
-
+	
 	@OneToMany(cascade = CascadeType.REFRESH, mappedBy = "fkPersona")
 	private List<CabeceraAdopcion> listaCabeceraAdopcion= new ArrayList<CabeceraAdopcion>();
 
@@ -85,6 +86,10 @@ public class Persona implements Serializable{
 	public void setEstadoRegistro(int estadoRegistro) {
 		this.estadoRegistro = estadoRegistro;
 	}
+	public String getNombresCompletos() {
+		return this.nombres + " " + this.apellidos;
+	}
+
 	@Override
 	public String toString() {
 		return "Persona [idPersona=" + idPersona + ", identificacion=" + identificacion + ", nombres=" + nombres

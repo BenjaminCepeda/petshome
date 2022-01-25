@@ -102,6 +102,10 @@ public class Empleado implements Serializable{
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
+	public String getNombresCompletos() {
+		return this.nombres + " " + this.apellidos;
+	}
+
 	@Override
 	public String toString() {
 		return "Empleado [idEmpleado=" + idEmpleado + ", cedula=" + cedula + ", nombres=" + nombres + ", apellidos="
