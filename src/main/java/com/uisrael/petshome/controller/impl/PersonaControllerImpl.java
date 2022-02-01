@@ -37,6 +37,13 @@ public class PersonaControllerImpl implements PersonaController {
 		return personaDao.listar();
 	}
 
+	
+	
+	@Override
+	public Persona buscar(int id) {
+		return personaDao.buscar(id);
+	}
+
 	@Override
 	public List<Tuple> listarTuple() {
 		return personaDao.listarTuple();

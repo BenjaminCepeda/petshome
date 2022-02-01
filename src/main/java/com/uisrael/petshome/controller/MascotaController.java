@@ -14,4 +14,5 @@ public interface MascotaController {
 	public List<Mascota> listar();
 	public List<Tuple> listarTuple();
 	public List<Tuple> totalMascotasPorTipo();
+	public Mascota buscar(int id);
 }

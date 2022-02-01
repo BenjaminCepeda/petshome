@@ -49,6 +49,12 @@ public class MascotaDaoImpl extends GenericDaoImpl<Mascota> implements MascotaDa
 	public List<Mascota> listar() {
 		return this.findAll();
 	}
+	
+
+	@Override
+	public Mascota buscar(int id) {
+		return this.buscar(id);
+	}
 
 	@Override
 	public List<Tuple> listarTuple(){

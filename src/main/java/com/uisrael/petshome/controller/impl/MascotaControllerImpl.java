@@ -36,6 +36,10 @@ public class MascotaControllerImpl implements MascotaController {
 		return mascotaDao.listar();
 	}
 
+	public Mascota buscar(int id) {
+		return mascotaDao.buscar(id);
+	}
+	
 	@Override
 	public List<Tuple> listarTuple() {
 		return mascotaDao.listarTuple();

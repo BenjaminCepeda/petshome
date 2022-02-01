@@ -42,6 +42,7 @@ public class PersonaDaoImpl extends GenericDaoImpl<Persona> implements PersonaDa
 		return this.findAll();	
 	}
 
+	
 	@Override
 	public List<Tuple> listarTuple(){
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
@@ -51,6 +52,12 @@ public class PersonaDaoImpl extends GenericDaoImpl<Persona> implements PersonaDa
 			orderBy(cb.asc( persona.get("apellidos")));
 		
 		return this.entityManager.createQuery(cq).getResultList();	
+	}
+
+	@Override
+	public Persona buscar(int id) {
+		// TODO Auto-generated method stub
+		return this.read(id);
 	}
 	
 

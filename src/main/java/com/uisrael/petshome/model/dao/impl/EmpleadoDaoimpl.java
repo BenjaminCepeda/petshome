@@ -51,6 +51,12 @@ public class EmpleadoDaoimpl extends GenericDaoImpl<Empleado> implements  Emplea
 	}
 
 
+	@Override
+	public Empleado buscar(int id) {
+
+		return this.read(id);
+	}
+
 	public List<Tuple> listarTuple(){
 		CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
 		CriteriaQuery<Tuple> cq = cb.createTupleQuery();

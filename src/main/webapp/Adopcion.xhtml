@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Adopciones</title>
+	<style type="text/css">
+button.ui-button {
+	margin-right: .5rem;
+}
+</style>
+</h:head>
+<h:body>
+	<ui:composition template="template.html">
+		<ui:define name="contenido">
+			<h3>ADMINISTRACIÓN DE ADOPCIONES</h3>
+			<h:form id="frmCabeceraAdopcion">
+				<p:growl id="mensaje" showDetail="true"></p:growl>
+				<p:outputPanel id="opnNuevo" class="ui-fluid">
+					<p:outputPanel
+						rendered="#{not empty cabeceraAdopcionView.cabeceraAdopcion}">
+						<p:panelGrid columns="2" padding="1">
+
+							<p:outputLabel value="Id"></p:outputLabel>
+							<p:panelGrid columns="3" styleClass="ui-noborder">
+								<p:inputText
+									value="#{cabeceraAdopcionView.cabeceraAdopcion.idCabeceraAdopcion}"
+									disabled="true"></p:inputText>
+								<p:outputLabel value="fecha"></p:outputLabel>
+								<p:datePicker id="spanish"
+									value="#{cabeceraAdopcionView.cabeceraAdopcion.fecha}"
+									monthNavigator="true" yearNavigator="true" showWeek="true" />
+							</p:panelGrid>
+							<p:outputLabel value="Adoptado por"></p:outputLabel>
+							<p:selectOneMenu id="somPersona"
+								value="#{cabeceraAdopcionView.idPersona}"
+								panelStyle="width:180px" effect="fade" var="c" filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemValue="0" itemLabel="Elija una opción"></f:selectItem>
+								<f:selectItems value="#{cabeceraAdopcionView.listaPersonas}"
+									var="persona"
+									itemLabel="#{persona.identificacion}-#{persona.nombres} #{persona.apellidos}"
+									itemValue="#{persona.idPersona}" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Id." />
+									</f:facet>
+									<h:outputText value="#{c.identificacion}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nombres" />
+									</f:facet>
+									<h:outputText value="#{c.nombresCompletos}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{cabeceraAdopcionView.buscarPersona}"
+									process="frmCabeceraAdopcion:somPersona"
+									update="frmCabeceraAdopcion:iptDireccion frmCabeceraAdopcion:iptTelefono">
+								</p:ajax>
+							</p:selectOneMenu>
+							<p:outputLabel value="Direccion adoptante"></p:outputLabel>
+							<p:panelGrid columns="3" styleClass="ui-noborder">
+								<p:inputText id="iptDireccion" disabled="true"
+									value="#{cabeceraAdopcionView.selectPersona.direccion}"></p:inputText>
+								<p:outputLabel value="Teléfono adoptante"></p:outputLabel>
+								<p:inputText id="iptTelefono" disabled="true"
+									value="#{cabeceraAdopcionView.selectPersona.telefono}"></p:inputText>
+							</p:panelGrid>
+							<p:outputLabel value="Entregado por"></p:outputLabel>
+							<p:selectOneMenu id="somEmpleado" value="#{cabeceraAdopcionView.idEmpleado}"
+								panelStyle="width:180px" effect="fade" var="c" filter="true"
+								filterMatchMode="contains">
+								<f:selectItem itemValue="0" itemLabel="Elija una opción"></f:selectItem>
+								<f:selectItems value="#{cabeceraAdopcionView.listaEmpleados}"
+									var="empleado"
+									itemLabel="#{empleado.cedula}-#{empleado.nombres} #{empleado.apellidos}"
+									itemValue="#{empleado.idEmpleado}" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Nombres empleado" />
+									</f:facet>
+									<h:outputText value="#{c.nombresCompletos}" />
+								</p:column>
+								<p:ajax event="itemSelect"
+									listener="#{cabeceraAdopcionView.buscarEmpleado}"
+									process="frmCabeceraAdopcion:somEmpleado">
+								</p:ajax>
+							</p:selectOneMenu>
+							<p:outputLabel value="Observacion"></p:outputLabel>
+							<p:inputText
+								value="#{cabeceraAdopcionView.cabeceraAdopcion.observacion}"></p:inputText>
+							<p:outputLabel value="Estado registro"></p:outputLabel>
+							<p:inputText
+								value="#{cabeceraAdopcionView.cabeceraAdopcion.estadoRegistro}"></p:inputText>
+						</p:panelGrid>
+					</p:outputPanel>
+				</p:outputPanel>
+				<p:panelGrid>
+					<p:row>
+						<p:column>
+
+							<p:commandButton value="Guardar" icon="pi pi-save"
+								action="#{cabeceraAdopcionView.insertar}" class="rounded-button"></p:commandButton>
+							<p:commandButton value="Cancelar" icon="pi pi-times"
+								action="#{cabeceraAdopcionView.limpiar}" class="rounded-button" />
+
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

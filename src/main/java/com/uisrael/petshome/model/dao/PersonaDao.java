@@ -13,5 +13,6 @@ public interface PersonaDao {
 	public void eliminar(Persona persona);
 	public List<Persona> listar();
 	public List<Tuple> listarTuple();
+	public Persona buscar(int id);
 	
 }

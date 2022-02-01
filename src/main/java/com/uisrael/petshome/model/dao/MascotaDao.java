@@ -13,4 +13,5 @@ public interface MascotaDao {
 	public List<Mascota> listar();
 	public List<Tuple> listarTuple();
 	public List<Tuple> totalMascotasPorTipo();
+	public Mascota buscar(int id);
 }

@@ -13,4 +13,5 @@ public interface EmpleadoController {
 	public List<Empleado> listar();
 	public List<Tuple> listarTuple();
 	public Long  totalEmpleados();
+	public Empleado buscar(int id);	
 }

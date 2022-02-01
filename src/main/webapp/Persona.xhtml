@@ -3,121 +3,133 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Ingreso de Personas</title>
+	<title>Personas</title>
 	<style type="text/css">
-    button.ui-button {
-        margin-right: .5rem;
-
-    }
+button.ui-button {
+	margin-right: .5rem;
+}
 </style>
+
 </h:head>
 <h:body>
-	<h:form id="frmPersona">
-		<p:growl id="mensaje" showDetail="true"></p:growl>
-		<p:toolbar>
-			<p:toolbarGroup>
-				<p:commandButton value="Nuevo" icon="pi pi-plus"
-					actionListener="#{personaView.limpiar}"
-					update="frmPersona:opnNuevo" oncomplete="PF('dlgNuevo').show()"
-					styleClass="rounded-button ui-button-success">
-					<p:resetInput target="frmPersona:opnNuevo" />
-				</p:commandButton>
-                <p:commandButton id="cmbBorrarSeleccionados" value="Eliminar selección"
-                                 icon="pi pi-trash" 
-                                 styleClass="rounded-button ui-button-danger" >
-                    <p:confirm header="Confirmation" message="Delete the selected products?"
-                               icon="pi pi-exclamation-triangle"/>
-                </p:commandButton>			</p:toolbarGroup>
-			<p:toolbarGroup align="right">
-				<p:fileUpload mode="simple" skinSimple="true" label="Import"
-					chooseIcon="pi pi-download" styleClass="rounded-button"/>
-				<p:commandButton value="Export" icon="pi pi-upload"
-					styleClass="rounded-button ui-button-help" ajax="false">
-					<p:dataExporter type="pdf" target="dtPersonas" fileName="personas" />
-				</p:commandButton>
-			</p:toolbarGroup>
-		</p:toolbar>
-		<p:dataTable id="dtPersonas" lazy="null" widgetVar="dtPersonas"
-			value="#{personaView.listaPersonas}" var="persona" rowKey="#{persona.idPersona}" 
-			paginator="true" paginatorPosition="bottom" rows="25">
+	<ui:composition template="template.html">
+		<ui:define name="contenido">
+			<h3>ADMINISTRACIÓN DE PERSONAS</h3>
+			<h:form id="frmPersona">
+				<p:growl id="mensaje" showDetail="true"></p:growl>
+				<p:toolbar>
+					<p:toolbarGroup>
+						<p:commandButton value="Nuevo" icon="pi pi-plus"
+							actionListener="#{personaView.limpiar}"
+							update="frmPersona:opnNuevo" oncomplete="PF('dlgNuevo').show()"
+							styleClass="rounded-button ui-button-success">
+							<p:resetInput target="frmPersona:opnNuevo" />
+						</p:commandButton>
+						<p:commandButton id="cmbBorrarSeleccionados"
+							value="Eliminar selección" icon="pi pi-trash"
+							styleClass="rounded-button ui-button-danger">
+							<p:confirm header="Confirmation"
+								message="Delete the selected products?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p:fileUpload mode="simple" skinSimple="true" label="Import"
+							chooseIcon="pi pi-download" styleClass="rounded-button" />
+						<p:commandButton value="Export" icon="pi pi-upload"
+							styleClass="rounded-button ui-button-help" ajax="false">
+							<p:dataExporter type="pdf" target="dtPersonas"
+								fileName="personas" />
+						</p:commandButton>
+					</p:toolbarGroup>
+				</p:toolbar>
+				<p:dataTable id="dtPersonas" lazy="null" widgetVar="dtPersonas"
+					value="#{personaView.listaPersonas}" var="persona"
+					rowKey="#{persona.idPersona}" paginator="true"
+					paginatorPosition="bottom" rows="25">
 
-			<p:column selectionMode="multiple" exportable="false"></p:column>
-			<p:column headerText="Id Persona" sortBy="#{persona.idPersona}">
-				<p:outputLabel value="#{persona.idPersona}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Nombres" sortBy="#{persona.nombres}">
-				<p:outputLabel value="#{persona.nombres}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Apellidos" sortBy="#{persona.apellidos}">
-				<p:outputLabel value="#{persona.apellidos}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Dirección" sortBy="#{persona.direccion}">
-				<p:outputLabel value="#{persona.direccion}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Teléfono" sortBy="#{persona.telefono}">
-				<p:outputLabel value="#{persona.telefono}"></p:outputLabel>
-			</p:column>
-			<p:column headerText="Estado registro" sortBy="#{persona.estadoRegistro}">
-				<p:outputLabel value="#{persona.estadoRegistro}"></p:outputLabel>
-			</p:column>
-			<p:column exportable="false">
-				<p:commandButton icon="pi pi-pencil" title="New" update="frmPersona:dlgNuevo"
-					oncomplete="PF('dlgNuevo').show()" styleClass="rounded-button">
-					<f:setPropertyActionListener value="#{persona}"
-						target="#{personaView.persona}"/>
-				</p:commandButton>
-				<p:commandButton icon="pi pi-trash" update="frmPersona:dtPersonas"
-					oncomplete="PF('dlgEliminar').show()" 
-					title="View" styleClass="rounded-button">
-					<f:setPropertyActionListener value="#{persona}"
-						target="#{personaView.persona}" />
-				</p:commandButton>
-			</p:column>
-		</p:dataTable>
+					<p:column selectionMode="multiple" exportable="false"></p:column>
+					<p:column headerText="Id Persona" sortBy="#{persona.idPersona}">
+						<p:outputLabel value="#{persona.idPersona}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Nombres" sortBy="#{persona.nombres}">
+						<p:outputLabel value="#{persona.nombres}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Apellidos" sortBy="#{persona.apellidos}">
+						<p:outputLabel value="#{persona.apellidos}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Dirección" sortBy="#{persona.direccion}">
+						<p:outputLabel value="#{persona.direccion}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Teléfono" sortBy="#{persona.telefono}">
+						<p:outputLabel value="#{persona.telefono}"></p:outputLabel>
+					</p:column>
+					<p:column headerText="Estado registro"
+						sortBy="#{persona.estadoRegistro}">
+						<p:outputLabel value="#{persona.estadoRegistro}"></p:outputLabel>
+					</p:column>
+					<p:column exportable="false">
+						<p:commandButton icon="pi pi-pencil" title="New"
+							update="frmPersona:dlgNuevo" oncomplete="PF('dlgNuevo').show()"
+							styleClass="rounded-button">
+							<f:setPropertyActionListener value="#{persona}"
+								target="#{personaView.persona}" />
+						</p:commandButton>
+						<p:commandButton icon="pi pi-trash" update="frmPersona:dtPersonas"
+							oncomplete="PF('dlgEliminar').show()" title="View"
+							styleClass="rounded-button">
+							<f:setPropertyActionListener value="#{persona}"
+								target="#{personaView.persona}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
 
-		<p:dialog id="dlgNuevo" header="Ingreso Personas" widgetVar="dlgNuevo"
-			showEffect="fade" modal="true">
-			<p:outputPanel id="opnNuevo" class="ui-fluid">
-				<p:outputPanel rendered="#{not empty personaView.persona}">
-					<p:panelGrid columns="4" padding="2">
-						<p:outputLabel value="Id"></p:outputLabel>
-						<p:inputText value="#{personaView.persona.idPersona}"
-							disabled="true"></p:inputText>
-						<p:outputLabel value="Nombres"></p:outputLabel>
-						<p:inputText value="#{personaView.persona.nombres}"></p:inputText>
-						<p:outputLabel value="Apellidos"></p:outputLabel>
-						<p:inputText value="#{personaView.persona.apellidos}"></p:inputText>
-						<p:outputLabel value="Identificacion"></p:outputLabel>
-						<p:inputText value="#{personaView.persona.identificacion}"></p:inputText>
-						<p:outputLabel value="Direccion"></p:outputLabel>
-						<p:inputText value="#{personaView.persona.direccion}"></p:inputText>
-						<p:outputLabel value="Telefono"></p:outputLabel>
-						<p:inputText value="#{personaView.persona.telefono}"></p:inputText>
-						<p:outputLabel value="Estado Registro"></p:outputLabel>
-						<p:inputText value="#{personaView.persona.estadoRegistro}"></p:inputText>
-					</p:panelGrid>
-				</p:outputPanel>
-			</p:outputPanel>
-			<f:facet name="footer">
-				<p:commandButton value="Guardar" action="#{personaView.insertar}"
-					icon="pi pi-save" onclick="PF('dlgNuevo').hide()"
-					class="rounded-button"></p:commandButton>
-				<p:commandButton value="Cancelar" icon="pi pi-times"
-					onclick="PF('dlgNuevo').hide()"
-					class="rounded-button" />
-			</f:facet>
-		</p:dialog>
-		<p:confirmDialog widgetVar="dlgEliminar" showEffect="fade" width="300"
-			message="Desea elimnar?" header="Confirm" severity="warn">
-			<p:commandButton value="Yes" icon="pi pi-check"
-				actionListener="#{personaView.eliminar}" process="@this"
-				oncomplete="PF('dlgEliminar').hide()" />
-			<p:commandButton value="No" type="button"
-				styleClass="ui-button-secondary" icon="pi pi-times"
-				onclick="PF('dlgEliminar').hide()" />
-		</p:confirmDialog>
-	</h:form>
+				<p:dialog id="dlgNuevo" header="Ingreso Personas"
+					widgetVar="dlgNuevo" showEffect="fade" modal="true">
+					<p:outputPanel id="opnNuevo" class="ui-fluid">
+						<p:outputPanel rendered="#{not empty personaView.persona}">
+							<p:panelGrid columns="4" padding="2">
+								<p:outputLabel value="Id"></p:outputLabel>
+								<p:inputText value="#{personaView.persona.idPersona}"
+									disabled="true"></p:inputText>
+								<p:outputLabel value="Nombres"></p:outputLabel>
+								<p:inputText value="#{personaView.persona.nombres}"></p:inputText>
+								<p:outputLabel value="Apellidos"></p:outputLabel>
+								<p:inputText value="#{personaView.persona.apellidos}"></p:inputText>
+								<p:outputLabel value="Identificacion"></p:outputLabel>
+								<p:inputText value="#{personaView.persona.identificacion}"></p:inputText>
+								<p:outputLabel value="Direccion"></p:outputLabel>
+								<p:inputText value="#{personaView.persona.direccion}"></p:inputText>
+								<p:outputLabel value="Telefono"></p:outputLabel>
+								<p:inputText value="#{personaView.persona.telefono}"></p:inputText>
+								<p:outputLabel value="Estado Registro"></p:outputLabel>
+								<p:inputText value="#{personaView.persona.estadoRegistro}"></p:inputText>
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:outputPanel>
+					<f:facet name="footer">
+						<p:commandButton value="Guardar" action="#{personaView.insertar}"
+							icon="pi pi-save" onclick="PF('dlgNuevo').hide()"
+							class="rounded-button"></p:commandButton>
+						<p:commandButton value="Cancelar" icon="pi pi-times"
+							onclick="PF('dlgNuevo').hide()" class="rounded-button" />
+					</f:facet>
+				</p:dialog>
+				<p:confirmDialog widgetVar="dlgEliminar" showEffect="fade"
+					width="300" message="Desea elimnar?" header="Confirm"
+					severity="warn">
+					<p:commandButton value="Yes" icon="pi pi-check"
+						actionListener="#{personaView.eliminar}" process="@this"
+						oncomplete="PF('dlgEliminar').hide()" />
+					<p:commandButton value="No" type="button"
+						styleClass="ui-button-secondary" icon="pi pi-times"
+						onclick="PF('dlgEliminar').hide()" />
+				</p:confirmDialog>
+			</h:form>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>

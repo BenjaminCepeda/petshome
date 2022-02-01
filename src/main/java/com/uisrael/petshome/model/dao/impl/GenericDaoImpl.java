@@ -97,4 +97,5 @@ public abstract class GenericDaoImpl <T>  implements GenericDao <T>{
 		return this.entityManager.createQuery(cq).getResultList();
 	}
 
+
 }

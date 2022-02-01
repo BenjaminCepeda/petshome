@@ -36,6 +36,10 @@ public class EmpleadoControllerImpl implements EmpleadoController {
 		return empleadoDao.listar();
 	}
 
+	public Empleado buscar(int id) {
+		return empleadoDao.buscar(id);
+	}
+	
 	@Override
 	public List<Tuple> listarTuple() {
 		return empleadoDao.listarTuple();
