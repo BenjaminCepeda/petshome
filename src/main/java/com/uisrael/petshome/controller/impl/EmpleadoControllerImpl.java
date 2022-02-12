@@ -36,6 +36,7 @@ public class EmpleadoControllerImpl implements EmpleadoController {
 		return empleadoDao.listar();
 	}
 
+	@Override
 	public Empleado buscar(int id) {
 		return empleadoDao.buscar(id);
 	}

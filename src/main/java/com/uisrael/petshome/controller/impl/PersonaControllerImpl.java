@@ -15,37 +15,39 @@ public class PersonaControllerImpl implements PersonaController {
 	
 	@Override
 	public void insertar(Persona persona) {
-		personaDao.insertar(persona);
+//		personaDao.insertar(persona);
 		
 
 	}
 
 	@Override
 	public void actualizar(Persona persona) {
-		personaDao.actualizar(persona);
+//		personaDao.actualizar(persona);
 
 	}
 
 	@Override
 	public void eliminar(Persona persona) {
-		// TODO Auto-generated method stub
-		personaDao.eliminar(persona);
+//		personaDao.eliminar(persona);
 	}
 
 	@Override
 	public List<Persona> listar() {
-		return personaDao.listar();
+//		return personaDao.listar();
+		return null;
 	}
 
 	
 	
 	@Override
 	public Persona buscar(int id) {
-		return personaDao.buscar(id);
+//		return personaDao.buscar(id);
+		return null;
 	}
 
 	@Override
 	public List<Tuple> listarTuple() {
-		return personaDao.listarTuple();
+//		return personaDao.listarTuple();
+		return null;
 	}
 }
